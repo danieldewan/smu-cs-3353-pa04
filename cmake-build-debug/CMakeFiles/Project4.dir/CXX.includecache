@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/danieldewan/Desktop/smu-cs-3353-pa04/DisjointSet.h
+iostream
+-
+vector
+-
+list
+-
+unordered_map
+-
+
+/Users/danieldewan/Desktop/smu-cs-3353-pa04/main.cpp
+DisjointSet.h
+/Users/danieldewan/Desktop/smu-cs-3353-pa04/DisjointSet.h
+

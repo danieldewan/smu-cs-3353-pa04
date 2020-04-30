@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="smu_cs_3353_pa04"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Project4">
+				<Option output="/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug/Project4" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug/Makefile&quot;  VERBOSE=1 Project4"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Project4/fast">
+				<Option output="/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug/Project4" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug/Makefile&quot;  VERBOSE=1 Project4/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/danieldewan/Desktop/smu-cs-3353-pa04/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/danieldewan/Desktop/smu-cs-3353-pa04/main.cpp">
+			<Option target="Project4"/>
+		</Unit>
+		<Unit filename="/Users/danieldewan/Desktop/smu-cs-3353-pa04/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/danieldewan/Desktop/smu-cs-3353-pa04/control.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/danieldewan/Desktop/smu-cs-3353-pa04/graph_1.kml">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/danieldewan/Desktop/smu-cs-3353-pa04/graph_10.kml">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/danieldewan/Desktop/smu-cs-3353-pa04/graph_2.kml">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/danieldewan/Desktop/smu-cs-3353-pa04/graph_3.kml">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/danieldewan/Desktop/smu-cs-3353-pa04/graph_4.kml">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/danieldewan/Desktop/smu-cs-3353-pa04/graph_5.kml">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/danieldewan/Desktop/smu-cs-3353-pa04/graph_6.kml">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/danieldewan/Desktop/smu-cs-3353-pa04/graph_7.kml">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/danieldewan/Desktop/smu-cs-3353-pa04/graph_8.kml">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/danieldewan/Desktop/smu-cs-3353-pa04/graph_9.kml">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
