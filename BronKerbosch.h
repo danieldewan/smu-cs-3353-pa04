@@ -50,6 +50,7 @@ void BronKerbosch::readControlFile(char *controlFile) { //control file just has 
                 DisjointSet<string> R;
                 DisjointSet<string> X;
                 algorithmWithoutPivot(R, graph, X);
+                //algorithmWithPivot(R, graph, X);
 
 //                trivialTime = algorithm(trivial);
 //                efficientTime = algorithm(efficient);
@@ -143,6 +144,9 @@ void BronKerbosch::algorithmWithPivot(DisjointSet<string> R, DisjointSet<string>
         R.print();
     }
     if ((P.set.size() > 0) && (P.set[0].size() > 0)) {
+        auto pivotVertex = P.set[0].front();
+        unordered_map<string, string> pivotNeighbors = vertices.getNeighbors(pivotVertex);
+
         DisjointSet<string> tempR;
         auto temp = P.set[0];
         for (auto currNode: temp) {

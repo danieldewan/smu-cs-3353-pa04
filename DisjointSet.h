@@ -17,6 +17,7 @@ public:
     DisjointSet<T> makeIntersection(unordered_map<T, T>);
     void insert(const T);
     bool remove(const T);
+    DisjointSet<T> removeMultiple(unordered_map<T, T>);
     void clear();
     void print();
     int numSubsets = 0;
@@ -73,11 +74,7 @@ DisjointSet<T> DisjointSet<T>::makeIntersection(unordered_map<T, T> set2) {
     if (set.size() > 0) {
         for (auto currNode : set[0]) {
             if (set2.count(currNode) == 1) {
-                if (intersection.numSubsets == 0) {
-                    intersection.makeSet(currNode);
-                } else {
-                    intersection.makeUnion(currNode, intersection.set[0].front());
-                }
+                intersection.insert(currNode);
             }
         }
     }
@@ -102,6 +99,19 @@ bool DisjointSet<T>::remove(const T value) {
         }
     }
     return false;
+}
+
+template <class T>
+DisjointSet<T> DisjointSet<T>::removeMultiple(unordered_map<T, T> set2) {
+    DisjointSet<T> reducedSet;
+    if (set.size() > 0) {
+        for (auto currNode : set[0]) {
+            if (set2.count(currNode) == 0) {
+                reducedSet.insert(currNode);
+            }
+        }
+    }
+    return reducedSet;
 }
 
 template <class T>
