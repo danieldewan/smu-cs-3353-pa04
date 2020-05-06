@@ -119,25 +119,22 @@ void BronKerbosch::trivialAlgorithm(DisjointSet<string> R, DisjointSet<string> P
     }
 
     list<string> *Plist = P.set.begin()->second.first;
+    DisjointSet<string> tempR;
     for (auto currNode: *Plist) {
-        if (R.numSubsets == 0) {
-            R.makeSet(currNode);
+        if (tempR.numSubsets == 0) {
+            tempR.makeSet(currNode);
         }
         else {
-            R.makeUnion(currNode, R.set.begin()->first);
+            tempR.makeUnion(currNode, R.set.begin()->first);
         }
 
         unordered_map<string, string> neighbors = vertices.getNeighbors(currNode);
         DisjointSet<string> tempP = P.makeIntersection(neighbors);
         DisjointSet<string> tempX = X.makeIntersection(neighbors);
 
+        trivialAlgorithm(tempR, tempP, tempX);
+
     }
-
-
-
-
-
-
 }
 
 #endif //SMU_CS_3353_PA04_BRONKERBOSCH_H

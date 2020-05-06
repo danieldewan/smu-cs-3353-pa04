@@ -19,6 +19,11 @@ int main(int argc, char** argv)
 
     set.print();
 
+    set.remove("5");
+    set.remove("3");
+    set.remove("7");
+    set.print();
+
     unordered_map<string, string> map;
     map.insert({{"5", "5"}, {"8", "8"}, {"4", "4"}});
 

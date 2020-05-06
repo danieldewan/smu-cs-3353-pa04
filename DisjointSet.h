@@ -15,6 +15,7 @@ public:
     int find(const T);
     void makeUnion(const T, const T);
     DisjointSet<T> makeIntersection(unordered_map<T, T>);
+    bool remove(const T);
     void print();
     int numSubsets = 0;
     unordered_map<T, pair<list<T>*, int> > set; //the set is a map with the value as the key and a pair of a list and a unique index for the list
@@ -78,6 +79,17 @@ DisjointSet<T> DisjointSet<T>::makeIntersection(unordered_map<T, T> set2) {
         }
     }
     return intersection;
+}
+
+template <class T>
+bool DisjointSet<T>::remove(const T value) {
+    for (auto currMap : set) {
+        if (currMap.first == value) {
+            list<T> *currList = currMap.second.first;
+            currList->remove(value);
+        }
+    }
+    set.erase(value);
 }
 
 template <class T>
