@@ -8,6 +8,7 @@
 #include <algorithm> //needed for sort() function
 #include <ctime> //needed to use clock to time algorithm
 #include <iomanip> //needed for setprecision()
+#include <cstring> //needed for memset()
 
 using namespace std;
 
