@@ -47,9 +47,6 @@ void BronKerbosch::readControlFile(char *controlFile) { //control file just has 
                 numGraphs++;
                 DisjointSet<string> R;
                 DisjointSet<string> X;
-                R.print();
-                graph.print();
-                X.print();
 
                 trivialAlgorithm(R, graph, X);
 //                trivialTime = algorithm(trivial);
@@ -106,8 +103,7 @@ bool BronKerbosch::readInputFile(char *input) { //reads in graph from file and r
             edges.push_back({newEdge, newEdge.weight});
             vertices.addInner(temp, temp2);
         }
-        vertices.print();
-        vertices.getNeighbors("9");
+
         inFile.close();
         return true;
     }
@@ -122,15 +118,17 @@ void BronKerbosch::trivialAlgorithm(DisjointSet<string> R, DisjointSet<string> P
         R.print();
     }
 
-    list<string> *currList = P.set.begin()->second.first;
-
-    for (auto currNode: *currList) {
+    list<string> *Plist = P.set.begin()->second.first;
+    for (auto currNode: *Plist) {
         if (R.numSubsets == 0) {
             R.makeSet(currNode);
         }
         else {
             R.makeUnion(currNode, R.set.begin()->first);
         }
+
+        unordered_map<string, string> neighbors = vertices.getNeighbors(currNode);
+
     }
 
 

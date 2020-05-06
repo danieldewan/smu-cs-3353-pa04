@@ -65,7 +65,7 @@ public:
     void removeInner(const T, const T);
     Outer<T>* goToNode(const T);
     bool contains(const T);
-    vector<T> getNeighbors(const T);
+    unordered_map<T, T> getNeighbors(const T);
     void print();
 };
 
@@ -156,12 +156,12 @@ bool Graph<T>::contains(const T startNode) {
 }
 
 template <class T>
-vector<T> Graph<T>::getNeighbors(const T node) {
-    vector<T> neighbors;
+unordered_map<T, T> Graph<T>::getNeighbors(const T node) {
+    unordered_map<T, T> neighbors;
     Outer<T>* outerNode = goToNode(node);
     auto innerCurr = outerNode->innerNodes.begin();
     while (innerCurr != outerNode->innerNodes.end()) {
-        neighbors.push_back(innerCurr->node->getData());
+        neighbors.insert({innerCurr->node->getData(), innerCurr->node->getData()});
         innerCurr++;
     }
     return neighbors;

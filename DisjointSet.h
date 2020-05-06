@@ -14,6 +14,7 @@ public:
     bool makeSet(const T);
     int find(const T);
     void makeUnion(const T, const T);
+    DisjointSet<T> makeIntersection(vector<T>);
     void print();
     int numSubsets = 0;
     unordered_map<T, pair<list<T>*, int> > set; //the set is a map with the value as the key and a pair of a list and a unique index for the list
@@ -61,6 +62,15 @@ void DisjointSet<T>::makeUnion(const T value1, const T value2) {
             set[currNode].second = set[value1].second;
         }
         this->numSubsets--;
+    }
+}
+
+template <class T>
+DisjointSet<T> DisjointSet<T>::makeIntersection(vector<T> intersection) {
+    list<string> *currentNodes = set.begin()->second.first;
+
+    for (auto currNode: *currentNodes) {
+
     }
 }
 
