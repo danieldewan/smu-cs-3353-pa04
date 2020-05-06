@@ -49,12 +49,6 @@ void BronKerbosch::readControlFile(char *controlFile) { //control file just has 
                 numGraphs++;
                 DisjointSet<string> R;
                 DisjointSet<string> X;
-                vertices.print();
-                //custom sort function based on decreasing vertex degree
-//                sort(vertices.outerNodes.begin(), vertices.outerNodes.end(), [](Outer<string>*  node1, Outer<string>*  node2) {
-//                    return node1->innerNodes.size() > node2->innerNodes.size();
-//                });
-                vertices.print();
                 algorithmWithoutPivot(R, graph, X);
 
 //                trivialTime = algorithm(trivial);
@@ -87,26 +81,7 @@ bool BronKerbosch::readInputFile(char *input) { //reads in graph from file and r
         for (int i = 0; i < numVertexes; i++) {
             inFile >> temp;
             vertices.addOuter(temp);
-            if (i == 0) {
-                graph.makeSet(temp);
-                temp2 = temp;
-            }
-            else {
-                graph.makeUnion(temp2, temp);
-            }
         }
-//        sort(vertices.outerNodes.begin(), vertices.outerNodes.end(), [](Outer<string>*  node1, Outer<string>*  node2) {
-//            return node1->innerNodes.size() > node2->innerNodes.size();
-//        });
-//        for (int i = 0; i < vertices.outerNodes.size(); ++i) {
-//            if (i == 0) {
-//                graph.makeSet();
-//                temp2 = temp;
-//            }
-//            else {
-//                graph.makeUnion(temp2, temp);
-//            }
-//        }
 
         inFile.ignore(50, '\n');
         inFile.ignore(1);
@@ -119,6 +94,14 @@ bool BronKerbosch::readInputFile(char *input) { //reads in graph from file and r
             inFile.ignore(50, '\n');
 
             vertices.addInner(temp, temp2);
+        }
+
+        //custom sort function based on decreasing vertex degree using lambda expression
+        sort(vertices.outerNodes.begin(), vertices.outerNodes.end(), [](Outer<string>*  node1, Outer<string>*  node2) {
+            return node1->innerNodes.size() > node2->innerNodes.size();
+        });
+        for (int i = 0; i < vertices.outerNodes.size(); ++i) {
+            graph.insert(vertices.outerNodes[i]->data);
         }
 
         inFile.close();

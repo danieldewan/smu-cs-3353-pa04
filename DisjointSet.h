@@ -89,7 +89,7 @@ void DisjointSet<T>::insert(const T value) {
     if (set.size() == 0) {
         makeSet(value);
     } else {
-        makeUnion(value, set[0].front());
+        set[0].push_back(value);
     }
 }
 
