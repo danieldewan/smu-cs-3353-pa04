@@ -6,6 +6,16 @@
 
 #IncludeRegexTransform: 
 
+/Users/danieldewan/Desktop/smu-cs-3353-pa04/BronKerbosch.h
+string
+-
+fstream
+-
+DisjointSet.h
+/Users/danieldewan/Desktop/smu-cs-3353-pa04/DisjointSet.h
+Graph.h
+/Users/danieldewan/Desktop/smu-cs-3353-pa04/Graph.h
+
 /Users/danieldewan/Desktop/smu-cs-3353-pa04/DisjointSet.h
 iostream
 -
@@ -16,7 +26,21 @@ list
 unordered_map
 -
 
+/Users/danieldewan/Desktop/smu-cs-3353-pa04/Graph.h
+iostream
+-
+vector
+-
+list
+-
+queue
+-
+fstream
+-
+unordered_map
+-
+
 /Users/danieldewan/Desktop/smu-cs-3353-pa04/main.cpp
-DisjointSet.h
-/Users/danieldewan/Desktop/smu-cs-3353-pa04/DisjointSet.h
+BronKerbosch.h
+/Users/danieldewan/Desktop/smu-cs-3353-pa04/BronKerbosch.h
 

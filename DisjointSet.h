@@ -10,15 +10,17 @@ using namespace std;
 
 template <class T>
 class DisjointSet {
-private:
-    int index = 0;
-    unordered_map<T, pair<list<T>*, int> > set; //the set is a map with the value as the key and a pair of a list and a unique index for the list
-    int numSubsets = 0;
 public:
     bool makeSet(const T);
     int find(const T);
     void makeUnion(const T, const T);
     void print();
+    int numSubsets = 0;
+    unordered_map<T, pair<list<T>*, int> > set; //the set is a map with the value as the key and a pair of a list and a unique index for the list
+
+private:
+    int index = 0;
+
 };
 
 template <class T>
