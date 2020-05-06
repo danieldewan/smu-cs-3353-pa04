@@ -22,6 +22,7 @@ public:
     bool readInputFile(char*);
     void algorithmWithoutPivot(DisjointSet<string>, DisjointSet<string>, DisjointSet<string>);
     void algorithmWithPivot(DisjointSet<string>, DisjointSet<string>, DisjointSet<string>);
+    void printClique(DisjointSet<string>);
 
 private:
     char* inputFile;
@@ -30,7 +31,6 @@ private:
     int numVertexes = 0;
     int numEdges = 0;
 
-    DisjointSet<string> graph;
     Graph<string> vertices;
     unordered_map<int, pair<string, int>> x;
 };
@@ -47,24 +47,34 @@ void BronKerbosch::readControlFile(char *controlFile) { //control file just has 
             inputFile = buffer;
 
             if (readInputFile(inputFile)) { //if the data file was read in
-                memset(buffer,0,sizeof(buffer));
+                DisjointSet<string> graph;
+                for (int i = 0; i < vertices.outerNodes.size(); ++i) {
+                    graph.insert(vertices.outerNodes[i]->data);
+                }
                 numGraphs++;
                 DisjointSet<string> R;
                 DisjointSet<string> X;
-                cout << "Agorithm without pivot:" << endl;
+                output << "************************************************************************************************************************" << endl;
+                output << "Graph " << numGraphs << ": " << "'" << inputFile << "'" << endl;
+                output << "Number of Vertices in the Graph: " << numVertexes << endl;
+                output << "Number of Edges in the Graph : " << numEdges << endl;
+                output << "Maximal Cliques: " << endl;
+
                 clock_t start1 = clock();
                 algorithmWithoutPivot(R, graph, X);
                 double time1 = (clock() - start1) / (double) CLOCKS_PER_SEC;
-                cout << "Time for Algorithm without pivot: " << time1 << " seconds" << endl;
-                     cout << "Agorithm with pivot:" << endl;
+
                 clock_t start2 = clock();
                 algorithmWithPivot(R, graph, X);
                 double time2 = (clock() - start2) / (double) CLOCKS_PER_SEC;
-                cout << "Time for Algorithm with pivot: " << time2 << " seconds" << endl;
 
+                output << endl;
+                output << "Time for Algorithm without pivot: " << setprecision(3) << time1 << " seconds" << endl;
+                output << "Time for Algorithm with pivot: " << setprecision(3) << time2 << " seconds" << endl;
+                memset(buffer,0,sizeof(buffer));
             }
         }
-        output << "************************************************************************************************************************" << endl;
+//        cout << "************************************************************************************************************************" << endl;
     }
     else {
         output << "Could not open control file." << endl;
@@ -108,9 +118,6 @@ bool BronKerbosch::readInputFile(char *input) { //reads in graph from file and r
         sort(vertices.outerNodes.begin(), vertices.outerNodes.end(), [](Outer<string>*  node1, Outer<string>*  node2) {
             return node1->innerNodes.size() > node2->innerNodes.size();
         });
-        for (int i = 0; i < vertices.outerNodes.size(); ++i) {
-            graph.insert(vertices.outerNodes[i]->data);
-        }
 
         inFile.close();
         return true;
@@ -123,7 +130,7 @@ bool BronKerbosch::readInputFile(char *input) { //reads in graph from file and r
 
 void BronKerbosch::algorithmWithoutPivot(DisjointSet<string> R, DisjointSet<string> P , DisjointSet<string> X) {
     if ((P.numSubsets == 0) && (X.numSubsets == 0)) { //if sets P and X are both empty, set R is a maximal clique
-        R.print();
+        //printClique(R);
     }
     if ((P.set.size() > 0) && (P.set[0].size() > 0)) {
         DisjointSet<string> tempR;
@@ -148,7 +155,7 @@ void BronKerbosch::algorithmWithoutPivot(DisjointSet<string> R, DisjointSet<stri
 
 void BronKerbosch::algorithmWithPivot(DisjointSet<string> R, DisjointSet<string> P, DisjointSet<string> X) {
     if ((P.numSubsets == 0) && (X.numSubsets == 0)) { //if sets P and X are both empty, set R is a maximal clique
-        R.print();
+        printClique(R);
     }
     if ((P.set.size() > 0) && (P.set[0].size() > 0)) {
         auto pivotVertex = P.set[0].front();
@@ -164,7 +171,7 @@ void BronKerbosch::algorithmWithPivot(DisjointSet<string> R, DisjointSet<string>
             DisjointSet<string> tempP = P.makeIntersection(neighbors);
             DisjointSet<string> tempX = X.makeIntersection(neighbors);
 
-            algorithmWithoutPivot(tempR, tempP, tempX);
+            algorithmWithPivot(tempR, tempP, tempX);
             P.remove(currNode);
             X.insert(currNode);
             if (P.set[0].size() == 0) {
@@ -172,6 +179,19 @@ void BronKerbosch::algorithmWithPivot(DisjointSet<string> R, DisjointSet<string>
             }
         }
     }
+}
+
+void  BronKerbosch::printClique(DisjointSet<string> clique) {
+    output << "| {";
+    int i =0;
+    for (auto currNode : clique.set[0]) {
+        output << currNode;
+        if ((i + 1) != clique.set[0].size()) {
+            output << ", ";
+        }
+        i++;
+    }
+    output << "}" << " ";
 }
 
 #endif //SMU_CS_3353_PA04_BRONKERBOSCH_H
