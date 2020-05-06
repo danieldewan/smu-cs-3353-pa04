@@ -15,7 +15,9 @@ public:
     int find(const T);
     void makeUnion(const T, const T);
     DisjointSet<T> makeIntersection(unordered_map<T, T>);
+    void insert(const T);
     bool remove(const T);
+    void clear();
     void print();
     int numSubsets = 0;
     vector<list<T >> set;
@@ -83,13 +85,28 @@ DisjointSet<T> DisjointSet<T>::makeIntersection(unordered_map<T, T> set2) {
 }
 
 template <class T>
+void DisjointSet<T>::insert(const T value) {
+    if (set.size() == 0) {
+        makeSet(value);
+    } else {
+        makeUnion(value, set[0].front());
+    }
+}
+
+template <class T>
 bool DisjointSet<T>::remove(const T value) {
     for (auto currNode : set[0]) {
         if (currNode == value) {
             set[0].remove(value);
-            break;
+            return true;
         }
     }
+    return false;
+}
+
+template <class T>
+void DisjointSet<T>::clear() {
+
 }
 
 template <class T>

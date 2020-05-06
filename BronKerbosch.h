@@ -5,19 +5,21 @@
 #include <fstream>
 #include "DisjointSet.h"
 #include "Graph.h"
+#include<algorithm>
 
 using namespace std;
 
 class BronKerbosch {
 public:
-    struct Edge {
-        string vertex1;
-        string vertex2;
-        int weight;
+    struct Vertex {
+        string name;
+        int degree; //number of edges connecting to the vertex
     };
+
     void readControlFile(char*);
     bool readInputFile(char*);
-    void trivialAlgorithm(DisjointSet<string>, DisjointSet<string>, DisjointSet<string>);
+    void algorithmWithoutPivot(DisjointSet<string>, DisjointSet<string>, DisjointSet<string>);
+    void algorithmWithPivot(DisjointSet<string>, DisjointSet<string>, DisjointSet<string>);
 
 private:
     char* inputFile;
@@ -25,10 +27,10 @@ private:
     int numGraphs = 0;
     int numVertexes = 0;
     int numEdges = 0;
-    vector<pair<Edge, int> > edges;
-    DisjointSet<string> set;
+
     DisjointSet<string> graph;
     Graph<string> vertices;
+    unordered_map<int, pair<string, int>> x;
 };
 
 void BronKerbosch::readControlFile(char *controlFile) { //control file just has the names of each graph file each on a separate line
@@ -47,8 +49,14 @@ void BronKerbosch::readControlFile(char *controlFile) { //control file just has 
                 numGraphs++;
                 DisjointSet<string> R;
                 DisjointSet<string> X;
+                vertices.print();
+                //custom sort function based on decreasing vertex degree
+//                sort(vertices.outerNodes.begin(), vertices.outerNodes.end(), [](Outer<string>*  node1, Outer<string>*  node2) {
+//                    return node1->innerNodes.size() > node2->innerNodes.size();
+//                });
+                vertices.print();
+                algorithmWithoutPivot(R, graph, X);
 
-                trivialAlgorithm(R, graph, X);
 //                trivialTime = algorithm(trivial);
 //                efficientTime = algorithm(efficient);
 //                printResults();
@@ -87,6 +95,19 @@ bool BronKerbosch::readInputFile(char *input) { //reads in graph from file and r
                 graph.makeUnion(temp2, temp);
             }
         }
+//        sort(vertices.outerNodes.begin(), vertices.outerNodes.end(), [](Outer<string>*  node1, Outer<string>*  node2) {
+//            return node1->innerNodes.size() > node2->innerNodes.size();
+//        });
+//        for (int i = 0; i < vertices.outerNodes.size(); ++i) {
+//            if (i == 0) {
+//                graph.makeSet();
+//                temp2 = temp;
+//            }
+//            else {
+//                graph.makeUnion(temp2, temp);
+//            }
+//        }
+
         inFile.ignore(50, '\n');
         inFile.ignore(1);
         inFile >> numEdges;
@@ -96,11 +117,7 @@ bool BronKerbosch::readInputFile(char *input) { //reads in graph from file and r
             getline(inFile, temp2, ',');
             inFile >> weight;
             inFile.ignore(50, '\n');
-            Edge newEdge;
-            newEdge.vertex1 = temp;
-            newEdge.vertex2 = temp2;
-            newEdge.weight = weight;
-            edges.push_back({newEdge, newEdge.weight});
+
             vertices.addInner(temp, temp2);
         }
 
@@ -113,7 +130,32 @@ bool BronKerbosch::readInputFile(char *input) { //reads in graph from file and r
     }
 }
 
-void BronKerbosch::trivialAlgorithm(DisjointSet<string> R, DisjointSet<string> P , DisjointSet<string> X) {
+void BronKerbosch::algorithmWithoutPivot(DisjointSet<string> R, DisjointSet<string> P , DisjointSet<string> X) {
+    if ((P.numSubsets == 0) && (X.numSubsets == 0)) { //if sets P and X are both empty, set R is a maximal clique
+        R.print();
+    }
+    if ((P.set.size() > 0) && (P.set[0].size() > 0)) {
+        DisjointSet<string> tempR;
+        auto temp = P.set[0];
+        for (auto currNode: temp) {
+            tempR.set = R.set;
+            tempR.insert(currNode);
+
+            unordered_map<string, string> neighbors = vertices.getNeighbors(currNode);
+            DisjointSet<string> tempP = P.makeIntersection(neighbors);
+            DisjointSet<string> tempX = X.makeIntersection(neighbors);
+
+            algorithmWithoutPivot(tempR, tempP, tempX);
+            P.remove(currNode);
+            X.insert(currNode);
+            if (P.set[0].size() == 0) {
+                break;
+            }
+        }
+    }
+}
+
+void BronKerbosch::algorithmWithPivot(DisjointSet<string> R, DisjointSet<string> P, DisjointSet<string> X) {
     if ((P.numSubsets == 0) && (X.numSubsets == 0)) { //if sets P and X are both empty, set R is a maximal clique
         R.print();
     }
@@ -132,7 +174,7 @@ void BronKerbosch::trivialAlgorithm(DisjointSet<string> R, DisjointSet<string> P
             DisjointSet<string> tempP = P.makeIntersection(neighbors);
             DisjointSet<string> tempX = X.makeIntersection(neighbors);
 
-            trivialAlgorithm(tempR, tempP, tempX);
+            algorithmWithoutPivot(tempR, tempP, tempX);
             P.remove(currNode);
             if (X.numSubsets == 0) {
                 X.makeSet(currNode);
