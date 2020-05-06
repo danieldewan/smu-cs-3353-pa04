@@ -117,23 +117,29 @@ void BronKerbosch::trivialAlgorithm(DisjointSet<string> R, DisjointSet<string> P
     if ((P.numSubsets == 0) && (X.numSubsets == 0)) { //if sets P and X are both empty, set R is a maximal clique
         R.print();
     }
-
-    list<string> *Plist = P.set.begin()->second.first;
-    DisjointSet<string> tempR;
-    for (auto currNode: *Plist) {
-        if (tempR.numSubsets == 0) {
-            tempR.makeSet(currNode);
-        }
-        else {
-            tempR.makeUnion(currNode, R.set.begin()->first);
-        }
-
-        unordered_map<string, string> neighbors = vertices.getNeighbors(currNode);
-        DisjointSet<string> tempP = P.makeIntersection(neighbors);
-        DisjointSet<string> tempX = X.makeIntersection(neighbors);
-
-        trivialAlgorithm(tempR, tempP, tempX);
-
+    if (P.set.size() > 0) {
+        DisjointSet<string> tempR;
+        tempR.set = R.set;
+        tempR.numSubsets = R.numSubsets;
+//        for (auto currNode: P.set) {
+//            if (tempR.numSubsets == 0) {
+//                tempR.makeSet(currNode);
+//            } else {
+//                tempR.makeUnion(currNode, R.set.begin()->first);
+//            }
+//
+//            unordered_map<string, string> neighbors = vertices.getNeighbors(currNode.first);
+//            DisjointSet<string> tempP = P.makeIntersection(neighbors);
+//            DisjointSet<string> tempX = X.makeIntersection(neighbors);
+//
+//            trivialAlgorithm(tempR, tempP, tempX);
+//            P.remove(currNode.first);
+//            if (X.numSubsets == 0) {
+//                X.makeSet(currNode.first);
+//            } else {
+//                X.makeUnion(currNode.first, R.set.begin()->first);
+//            }
+//        }
     }
 }
 
