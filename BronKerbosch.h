@@ -5,7 +5,9 @@
 #include <fstream>
 #include "DisjointSet.h"
 #include "Graph.h"
-#include<algorithm>
+#include <algorithm> //needed for sort() function
+#include <ctime> //needed to use clock to time algorithm
+#include <iomanip> //needed for setprecision()
 
 using namespace std;
 
@@ -49,12 +51,17 @@ void BronKerbosch::readControlFile(char *controlFile) { //control file just has 
                 numGraphs++;
                 DisjointSet<string> R;
                 DisjointSet<string> X;
+                cout << "Agorithm without pivot:" << endl;
+                clock_t start1 = clock();
                 algorithmWithoutPivot(R, graph, X);
-                //algorithmWithPivot(R, graph, X);
+                double time1 = (clock() - start1) / (double) CLOCKS_PER_SEC;
+                cout << "Time for Algorithm without pivot: " << time1 << " seconds" << endl;
+                     cout << "Agorithm with pivot:" << endl;
+                clock_t start2 = clock();
+                algorithmWithPivot(R, graph, X);
+                double time2 = (clock() - start2) / (double) CLOCKS_PER_SEC;
+                cout << "Time for Algorithm with pivot: " << time2 << " seconds" << endl;
 
-//                trivialTime = algorithm(trivial);
-//                efficientTime = algorithm(efficient);
-//                printResults();
             }
         }
         output << "************************************************************************************************************************" << endl;
@@ -146,16 +153,12 @@ void BronKerbosch::algorithmWithPivot(DisjointSet<string> R, DisjointSet<string>
     if ((P.set.size() > 0) && (P.set[0].size() > 0)) {
         auto pivotVertex = P.set[0].front();
         unordered_map<string, string> pivotNeighbors = vertices.getNeighbors(pivotVertex);
-
+        DisjointSet<string> reducedSet = P.removeMultiple(pivotNeighbors);
         DisjointSet<string> tempR;
-        auto temp = P.set[0];
+        auto temp = reducedSet.set[0];
         for (auto currNode: temp) {
             tempR.set = R.set;
-            if (tempR.set.size() == 0) {
-                tempR.makeSet(currNode);
-            } else {
-                tempR.makeUnion(currNode, tempR.set[0].front());
-            }
+            tempR.insert(currNode);
 
             unordered_map<string, string> neighbors = vertices.getNeighbors(currNode);
             DisjointSet<string> tempP = P.makeIntersection(neighbors);
@@ -163,11 +166,7 @@ void BronKerbosch::algorithmWithPivot(DisjointSet<string> R, DisjointSet<string>
 
             algorithmWithoutPivot(tempR, tempP, tempX);
             P.remove(currNode);
-            if (X.numSubsets == 0) {
-                X.makeSet(currNode);
-            } else {
-                X.makeUnion(currNode, X.set[0].front());
-            }
+            X.insert(currNode);
             if (P.set[0].size() == 0) {
                 break;
             }
