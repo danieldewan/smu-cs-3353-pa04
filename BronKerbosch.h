@@ -117,29 +117,32 @@ void BronKerbosch::trivialAlgorithm(DisjointSet<string> R, DisjointSet<string> P
     if ((P.numSubsets == 0) && (X.numSubsets == 0)) { //if sets P and X are both empty, set R is a maximal clique
         R.print();
     }
-    if (P.set.size() > 0) {
+    if ((P.set.size() > 0) && (P.set[0].size() > 0)) {
         DisjointSet<string> tempR;
-        tempR.set = R.set;
-        tempR.numSubsets = R.numSubsets;
-//        for (auto currNode: P.set) {
-//            if (tempR.numSubsets == 0) {
-//                tempR.makeSet(currNode);
-//            } else {
-//                tempR.makeUnion(currNode, R.set.begin()->first);
-//            }
-//
-//            unordered_map<string, string> neighbors = vertices.getNeighbors(currNode.first);
-//            DisjointSet<string> tempP = P.makeIntersection(neighbors);
-//            DisjointSet<string> tempX = X.makeIntersection(neighbors);
-//
-//            trivialAlgorithm(tempR, tempP, tempX);
-//            P.remove(currNode.first);
-//            if (X.numSubsets == 0) {
-//                X.makeSet(currNode.first);
-//            } else {
-//                X.makeUnion(currNode.first, R.set.begin()->first);
-//            }
-//        }
+        auto temp = P.set[0];
+        for (auto currNode: temp) {
+            tempR.set = R.set;
+            if (tempR.set.size() == 0) {
+                tempR.makeSet(currNode);
+            } else {
+                tempR.makeUnion(currNode, tempR.set[0].front());
+            }
+
+            unordered_map<string, string> neighbors = vertices.getNeighbors(currNode);
+            DisjointSet<string> tempP = P.makeIntersection(neighbors);
+            DisjointSet<string> tempX = X.makeIntersection(neighbors);
+
+            trivialAlgorithm(tempR, tempP, tempX);
+            P.remove(currNode);
+            if (X.numSubsets == 0) {
+                X.makeSet(currNode);
+            } else {
+                X.makeUnion(currNode, X.set[0].front());
+            }
+            if (P.set[0].size() == 0) {
+                break;
+            }
+        }
     }
 }
 

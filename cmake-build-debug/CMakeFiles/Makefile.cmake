@@ -48,6 +48,8 @@ set(CMAKE_MAKEFILE_DEPENDS
   "../graph_7.kml"
   "../graph_8.kml"
   "../graph_9.kml"
+  "../testGraph.txt"
+  "../testGraph2.txt"
   )
 
 # The corresponding makefile is:
@@ -69,6 +71,8 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "graph_8.kml"
   "graph_9.kml"
   "graph_10.kml"
+  "testGraph.txt"
+  "testGraph2.txt"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 

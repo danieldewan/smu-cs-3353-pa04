@@ -23,13 +23,15 @@ set (input08 "graph_7.kml")
 set (input09 "graph_8.kml")
 set (input10 "graph_9.kml")
 set (input11 "graph_10.kml")
+set (input12 "testGraph.txt")
+set (input13 "testGraph2.txt")
 
 
 #
 ##########################################
 
 # Copy data files to build dir
-foreach(file IN LISTS input01 input02 input03 input04 input05 input06 input07 input08 input09 input10 input11)
+foreach(file IN LISTS input01 input02 input03 input04 input05 input06 input07 input08 input09 input10 input11 input12 input13)
     configure_file(${file} ${file} COPYONLY)
 endforeach()
 
