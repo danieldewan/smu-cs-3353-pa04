@@ -128,8 +128,12 @@ void BronKerbosch::trivialAlgorithm(DisjointSet<string> R, DisjointSet<string> P
         }
 
         unordered_map<string, string> neighbors = vertices.getNeighbors(currNode);
+        DisjointSet<string> tempP = P.makeIntersection(neighbors);
+        DisjointSet<string> tempX = X.makeIntersection(neighbors);
 
     }
+
+
 
 
 
