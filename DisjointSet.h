@@ -139,7 +139,7 @@ void DisjointSet<T>::print() {
         }
         i++;
     }
-    cout << "} " << "Subsets: " << this->numSubsets << endl;
+    cout << "}" << endl;
 }
 
 #endif //SMU_CS_3353_PA04_DISJOINTSET_H

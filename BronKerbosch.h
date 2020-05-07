@@ -14,13 +14,10 @@ using namespace std;
 
 class BronKerbosch {
 public:
-    struct Vertex {
-        string name;
-        int degree; //number of edges connecting to the vertex
-    };
-
     void readControlFile(char*);
     bool readInputFile(char*);
+    //both versions of the algorithm were implemented using the logic from https://en.wikipedia.org/wiki/Bron%E2%80%93Kerbosch_algorithm
+    //the method for choosing the pivot of the optimized algorithm uses logic from https://hal.inria.fr/inria-00070393/PDF/RR-5615.pdf
     void algorithmWithoutPivot(DisjointSet<string>, DisjointSet<string>, DisjointSet<string>);
     void algorithmWithPivot(DisjointSet<string>, DisjointSet<string>, DisjointSet<string>);
     void printClique(DisjointSet<string>);
@@ -60,22 +57,23 @@ void BronKerbosch::readControlFile(char *controlFile) { //control file just has 
                 output << "Number of Vertices in the Graph: " << numVertexes << endl;
                 output << "Number of Edges in the Graph : " << numEdges << endl;
                 output << "Maximal Cliques: " << endl;
-
+                output << "Algorithm without pivot: ";
                 clock_t start1 = clock();
                 algorithmWithoutPivot(R, graph, X);
                 double time1 = (clock() - start1) / (double) CLOCKS_PER_SEC;
 
+                output << endl << "Algorithm with pivot: ";
                 clock_t start2 = clock();
                 algorithmWithPivot(R, graph, X);
+
                 double time2 = (clock() - start2) / (double) CLOCKS_PER_SEC;
 
                 output << endl;
                 output << "Time for Algorithm without pivot: " << setprecision(3) << time1 << " seconds" << endl;
                 output << "Time for Algorithm with pivot: " << setprecision(3) << time2 << " seconds" << endl;
-                memset(buffer,0,sizeof(buffer));
+                memset(buffer,0,sizeof(buffer)); //clears the buffer
             }
         }
-//        cout << "************************************************************************************************************************" << endl;
     }
     else {
         output << "Could not open control file." << endl;
@@ -91,7 +89,6 @@ bool BronKerbosch::readInputFile(char *input) { //reads in graph from file and r
     int weight = 0;
     string temp;
     string temp2;
-    char buffer[50];
 
     if (inFile.is_open()) { //checks to see if data file opened
         inFile.ignore(1);
@@ -115,7 +112,7 @@ bool BronKerbosch::readInputFile(char *input) { //reads in graph from file and r
             vertices.addInner(temp, temp2);
         }
 
-        //custom sort function based on decreasing vertex degree using lambda expression
+        //custom sort function based on decreasing vertex degree using a lambda expression
         sort(vertices.outerNodes.begin(), vertices.outerNodes.end(), [](Outer<string>*  node1, Outer<string>*  node2) {
             return node1->innerNodes.size() > node2->innerNodes.size();
         });
@@ -128,56 +125,51 @@ bool BronKerbosch::readInputFile(char *input) { //reads in graph from file and r
         return false;
     }
 }
-
+//P is initially contains all the vertices in the graph and R and X are empty sets
 void BronKerbosch::algorithmWithoutPivot(DisjointSet<string> R, DisjointSet<string> P , DisjointSet<string> X) {
-    if ((P.numSubsets == 0) && (X.numSubsets == 0)) { //if sets P and X are both empty, set R is a maximal clique
-        //printClique(R);
-    }
-    if ((P.set.size() > 0) && (P.set[0].size() > 0)) {
-        DisjointSet<string> tempR;
-        auto temp = P.set[0];
-        for (auto currNode: temp) {
-            tempR.set = R.set;
-            tempR.insert(currNode);
+        if ((P.numSubsets == 0) && (X.numSubsets == 0)) { //if sets P and X are both empty, set R is a maximal clique
+            printClique(R);
+        }
+        if ((P.set.size() > 0) && (P.set[0].size() > 0)) { //checks to see if the disjoint set is empty and if the first subset is empty
+            DisjointSet<string> tempR;
+            auto temp = P.set[0]; //sets temp to the first subset in disjoint set
+            for (auto currNode: temp) {
+                tempR.set = R.set;
+                tempR.insert(currNode); //inserts currNode into first subset in disjoint set
 
-            unordered_map<string, string> neighbors = vertices.getNeighbors(currNode);
-            DisjointSet<string> tempP = P.makeIntersection(neighbors);
-            DisjointSet<string> tempX = X.makeIntersection(neighbors);
+                unordered_map<string, string> neighbors = vertices.getNeighbors(currNode); //gets neighbors of currNode
+                DisjointSet<string> tempP = P.makeIntersection(neighbors); //tempP is the intersection of P and neighbors
+                DisjointSet<string> tempX = X.makeIntersection(neighbors); //tempX is the intersection of X and neighbors
 
-            algorithmWithoutPivot(tempR, tempP, tempX);
-            P.remove(currNode);
-            X.insert(currNode);
-            if (P.set[0].size() == 0) {
-                break;
+                algorithmWithoutPivot(tempR, tempP, tempX); //recursively calls algorithm
+                P.remove(currNode); //moves currNode from P and X to exclude currNode from consideration in future cliques
+                X.insert(currNode); //inserts currNode into X
             }
         }
-    }
 }
 
 void BronKerbosch::algorithmWithPivot(DisjointSet<string> R, DisjointSet<string> P, DisjointSet<string> X) {
+
     if ((P.numSubsets == 0) && (X.numSubsets == 0)) { //if sets P and X are both empty, set R is a maximal clique
         printClique(R);
     }
-    if ((P.set.size() > 0) && (P.set[0].size() > 0)) {
+    if ((P.set.size() > 0) && (P.set[0].size() > 0)) { //checks to see if the disjoint set is empty and if the first subset is empty
         auto pivotVertex = P.set[0].front();
         unordered_map<string, string> pivotNeighbors = vertices.getNeighbors(pivotVertex);
         DisjointSet<string> reducedSet = P.removeMultiple(pivotNeighbors);
         DisjointSet<string> tempR;
-        auto temp = reducedSet.set[0];
+        auto temp = reducedSet.set[0]; //sets temp to the first subset in disjoint set
         for (auto currNode: temp) {
             tempR.set = R.set;
-            tempR.insert(currNode);
+            tempR.insert(currNode); //inserts currNode into first subset in disjoint set
 
             unordered_map<string, string> neighbors = vertices.getNeighbors(currNode);
-            DisjointSet<string> tempP = P.makeIntersection(neighbors);
-            DisjointSet<string> tempX = X.makeIntersection(neighbors);
+            DisjointSet<string> tempP = P.makeIntersection(neighbors); //tempP is the intersection of P and neighbors
+            DisjointSet<string> tempX = X.makeIntersection(neighbors); //tempX is the intersection of X and neighbors
 
-            algorithmWithPivot(tempR, tempP, tempX);
-            P.remove(currNode);
-            X.insert(currNode);
-            if (P.set[0].size() == 0) {
-                break;
-            }
+            algorithmWithPivot(tempR, tempP, tempX); //recursively calls algorithm
+            P.remove(currNode); //moves currNode from P and X to exclude currNode from consideration in future cliques
+            X.insert(currNode); //inserts currNode into X
         }
     }
 }

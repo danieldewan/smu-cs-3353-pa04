@@ -1,5 +1,3 @@
-testGraph.txt
-testGraph2.txt
 graph_1.kml
 graph_2.kml
 graph_3.kml
