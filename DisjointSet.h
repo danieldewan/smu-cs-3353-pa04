@@ -81,6 +81,7 @@ DisjointSet<T> DisjointSet<T>::makeIntersection(unordered_map<T, T> set2) {
     return intersection;
 }
 
+//inserts value into first subset
 template <class T>
 void DisjointSet<T>::insert(const T value) {
     if (set.size() == 0) {
@@ -89,6 +90,7 @@ void DisjointSet<T>::insert(const T value) {
         set[0].push_back(value);
     }
 }
+
 
 template <class T>
 bool DisjointSet<T>::remove(const T value) {
@@ -101,6 +103,7 @@ bool DisjointSet<T>::remove(const T value) {
     return false;
 }
 
+//removes multiple values from first subset based on the unordered map passed into it
 template <class T>
 DisjointSet<T> DisjointSet<T>::removeMultiple(unordered_map<T, T> set2) {
     DisjointSet<T> reducedSet;

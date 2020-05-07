@@ -155,6 +155,7 @@ bool Graph<T>::contains(const T startNode) {
     return false;
 }
 
+//returns unordered map containing all the vertices connected to the passed in value
 template <class T>
 unordered_map<T, T> Graph<T>::getNeighbors(const T node) {
     unordered_map<T, T> neighbors;

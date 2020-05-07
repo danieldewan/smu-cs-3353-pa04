@@ -148,13 +148,14 @@ void BronKerbosch::algorithmWithoutPivot(DisjointSet<string> R, DisjointSet<stri
         }
 }
 
+//P is initially contains all the vertices in the graph and R and X are empty sets
 void BronKerbosch::algorithmWithPivot(DisjointSet<string> R, DisjointSet<string> P, DisjointSet<string> X) {
 
     if ((P.numSubsets == 0) && (X.numSubsets == 0)) { //if sets P and X are both empty, set R is a maximal clique
         printClique(R);
     }
     if ((P.set.size() > 0) && (P.set[0].size() > 0)) { //checks to see if the disjoint set is empty and if the first subset is empty
-        auto pivotVertex = P.set[0].front();
+        auto pivotVertex = P.set[0].front(); //gets first vertex which has the highest degree
         unordered_map<string, string> pivotNeighbors = vertices.getNeighbors(pivotVertex);
         DisjointSet<string> reducedSet = P.removeMultiple(pivotNeighbors);
         DisjointSet<string> tempR;
